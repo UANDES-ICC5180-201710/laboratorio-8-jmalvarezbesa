@@ -26,6 +26,10 @@ class AssignmentsController < ApplicationController
   # POST /assignments.json
   def create
     @assignment = Assignment.new(assignment_params)
+    puts ("---------------------------------------------------------------------------------------------")
+    puts (@assignment.start_date)
+    puts (@assignment.end_date)
+    puts ("---------------------------------------------------------------------------------------------")
     @assignment.course = @course
 
     respond_to do |format|
@@ -79,6 +83,6 @@ class AssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
-      params.require(:assignment).permit(:title, :statement, :course_id)
+      params.require(:assignment).permit(:title, :statement, :course_id, :start_date, :end_date)
     end
 end

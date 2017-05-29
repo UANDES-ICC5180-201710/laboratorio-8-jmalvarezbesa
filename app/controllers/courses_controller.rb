@@ -69,20 +69,20 @@ class CoursesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_course
-      @course = Course.find(params[:id])
+  # Use callbacks to share common setup or constraints between actions.
+  def set_course
+    @course = Course.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def course_params
+    teacher_id = params.require(:course)[:teacher]
+    if teacher_id
+      teacher = Person.find(teacher_id)
+    else
+      teacher = nil
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def course_params
-      teacher_id = params.require(:course)[:teacher]
-      if teacher_id
-        teacher = Person.find(teacher_id)
-      else
-        teacher = nil
-      end
-
-      params.require(:course).permit(:title, :code, :quota).merge(:teacher => teacher)
-    end
+    params.require(:course).permit(:title, :code, :quota).merge(:teacher => teacher)
+  end
 end

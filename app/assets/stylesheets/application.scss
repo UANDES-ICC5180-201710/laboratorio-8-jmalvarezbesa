@@ -14,4 +14,10 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'bootstrap-datetimepicker';
 @import "*";
+
+.table > thead > tr > th {
+  background-color: darken(#428bca, 6.5%);
+  color: white;
+}

@@ -31,7 +31,7 @@ class EnrollmentsController < ApplicationController
     respond_to do |format|
       if @enrollment.save
         format.html {
-          redirect_to action: 'students', controller: 'courses', :id => @course.id, notice: 'Enrollment was successfully created.'
+          redirect_to action: 'enrollments', controller: 'courses', :id => @course.id, notice: 'Enrollment was successfully created.'
         }
         format.json { render :show, status: :created, location: @enrollment }
       else
@@ -66,27 +66,27 @@ class EnrollmentsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_enrollment
-      @enrollment = Enrollment.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_enrollment
+    @enrollment = Enrollment.find(params[:id])
+  end
 
-    def set_course
-      if @enrollment and @enrollment.course_id
-        @course = @enrollment.course
-      else
-        @course = Course.find(params[:course_id])
-      end
+  def set_course
+    if @enrollment and @enrollment.course_id
+      @course = @enrollment.course
+    else
+      @course = Course.find(params[:course_id])
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def enrollment_params
-      student_id = params.require(:enrollment)[:student]
-      if student_id
-        student = Person.find(student_id)
-      else
-        student = nil
-      end
-      params.require(:enrollment).permit().merge(:student => student)
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def enrollment_params
+    student_id = params.require(:enrollment)[:student]
+    if student_id
+      student = Person.find(student_id)
+    else
+      student = nil
     end
+    params.require(:enrollment).permit().merge(:student => student)
+  end
 end
